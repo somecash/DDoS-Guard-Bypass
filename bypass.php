@@ -83,7 +83,7 @@ for ($x = 1; $x <= 30; $x++) {
 		//Request 1
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_PROXY, ''.$protocol.''.$proxy.'');
-		curl_setopt($ch, CURLOPT_URL, $url . '/' . $payload);
+		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/'.$proxy.'.txt');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 			'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0',
@@ -151,7 +151,7 @@ for ($x = 1; $x <= $requests; $x++) {
 		
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_PROXY, $proxy);
-	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_URL, $url . '/' . $payload);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0',
 		'Accept-Language: en-US,en;q=0.5',
