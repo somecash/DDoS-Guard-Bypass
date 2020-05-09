@@ -1,4 +1,4 @@
-# DDoS-Guard-Bypass
+# DDoS-Guard Bypass
 DDoS-Guard Bypass that Bypasses "some-what" of their DDoS protection.
 
 This script can be improved but, **I don't feel like porting it to a different language.**
